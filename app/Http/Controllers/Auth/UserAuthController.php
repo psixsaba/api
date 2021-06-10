@@ -15,7 +15,7 @@ class UserAuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
-            'balance' => 'required|integer|digits_between:1,5',
+            'balance' => 'required|integer|digits_between:1,7',
         ]);
 
         $data['password'] = bcrypt($request->password);

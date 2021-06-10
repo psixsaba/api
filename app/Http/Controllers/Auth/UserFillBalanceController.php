@@ -11,17 +11,25 @@ class UserFillBalanceController extends Controller
 {
     public function fill_balance(Request $request)
     {
-         $request->validate([
+
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
             'user_id' => 'required',
-            'amount' => 'required|integer|digits_between:1,5'
+            'amount' => 'required|numeric|between:0,999.99'
         ]);
 
         $id = $request->user_id;
         $user = User::find($id);
 
         if ($user == null) {
-            return response(['error_message' => 'tkvenze uaria']);
+            return response(['error_message' => 'User not found'], 404);
         }
+        elseif ($validator->fails()){
+            return response(['error' => $validator->errors(),
+                'Validation Error'], 422);
+        }
+
 
         $user->update($request->all());
 
