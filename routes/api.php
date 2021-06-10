@@ -20,4 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/register', 'App\Http\Controllers\Auth\UserAuthController@register')->name('api.register');
 Route::post('/login', 'App\Http\Controllers\Auth\UserAuthController@login');
 Route::post('/fill-balance', 'App\Http\Controllers\Auth\UserFillBalanceController@fill_balance');
+Route::post('/balance/history', 'App\Http\Controllers\Auth\UserFillBalanceController@balance_history');
+
+
 Route::apiResource('/user', 'UserController')->middleware('auth:api');
