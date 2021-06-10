@@ -9,19 +9,27 @@ use App\Models\Transaction;
 
 class UserFillBalanceController extends Controller
 {
-    public function fill_balance(Request $request){
-        $transaction = new Transaction();
-        $data = $request->validate([
-            'sender_user_id' => 1,
-            'recipient_user_id' => 2,
-            'amount' => 2,
-            'commission_amount' => 2
+    public function fill_balance(Request $request)
+    {
+         $request->validate([
+            'user_id' => 'required',
+            'amount' => 'required|integer|digits_between:1,5'
         ]);
 
-        $transaction = Transaction::created($data);
+        $id = $request->user_id;
+        $user = User::find($id);
+
+        if ($user == null) {
+            return response(['error_message' => 'tkvenze uaria']);
+        }
+
+        $user->update($request->all());
+
+        $user->balance += $request->amount;
+        $user->update();
 
 
-        return response([ 'status' => 200 ]);
+        return response(['user' => $user, 'message' => 'Success'], 200);
 
     }
 }
