@@ -43,4 +43,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function transaction()
+    {
+        return $this->hasOne(BalanceTransactionHistory::class,'foreign_user_ID', 'id');
+    }
 }

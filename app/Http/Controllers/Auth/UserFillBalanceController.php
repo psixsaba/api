@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\BalanceTransactionHistory;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Validator;
+
 
 class UserFillBalanceController extends Controller
 {
@@ -35,6 +38,13 @@ class UserFillBalanceController extends Controller
 
         $user->balance += $request->amount;
         $user->update();
+
+        $transaction = new BalanceTransactionHistory();
+
+        $transaction->foreign_user_id = $id;
+        $transaction->transfer_amount = $request->amount;
+
+        $transaction->save();
 
 
         return response(['user' => $user, 'message' => 'Success'], 200);
