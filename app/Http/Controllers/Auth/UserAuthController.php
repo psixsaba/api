@@ -14,6 +14,7 @@ class UserAuthController extends Controller
         $data = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
+            'is_admin' => 'integer|between:0,1',
             'password' => 'required|confirmed',
             'balance' => 'required|integer|digits_between:1,7',
         ]);

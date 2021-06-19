@@ -20,8 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/register', 'App\Http\Controllers\Auth\UserAuthController@register')->name('api.register');
 Route::post('/login', 'App\Http\Controllers\Auth\UserAuthController@login');
 Route::post('/fill-balance', 'App\Http\Controllers\Auth\UserFillBalanceController@fill_balance');
-Route::post('/balance/history', 'App\Http\Controllers\Auth\UserFillBalanceController@balance_history');
-Route::post('/transfer/{user_id}/{amount}', 'App\Http\Controllers\Auth\UserAuthController@transfer');
+Route::post('/balance/history', 'App\Http\Controllers\Auth\UserFillBalanceController@history');
+Route::post('/transfer/{user_id}', 'App\Http\Controllers\Auth\UserFillBalanceController@transfer');
+Route::post('/my-transaction', 'App\Http\Controllers\Auth\UserFillBalanceController@mytransaction');
+Route::post('/transactions', 'App\Http\Controllers\Auth\UserFillBalanceController@transactions');
+
+
 
 
 Route::apiResource('/user', 'UserController')->middleware('auth:api');
